@@ -1,0 +1,54 @@
+class Money:
+    def __init__(self, dollars=0, cents=0):
+        self.dollars = dollars
+        self.cents = cents
+        self.normalize()
+
+    def normalize(self):
+        # Нормализовать центы в пределах [0, 99] и корректно изменить доллары
+        self.dollars += self.cents // 100
+        self.cents = self.cents % 100
+
+    def __add__(self, other):
+        if isinstance(other, Money):
+            return Money(self.dollars + other.dollars, self.cents + other.cents)
+        raise TypeError("Операция сложения возможна только между двумя суммами денег")
+
+    def __sub__(self, other):
+        if isinstance(other, Money):
+            # Преобразование всей суммы в центы для удобства вычислений
+            total_cents1 = self.dollars * 100 + self.cents
+            total_cents2 = other.dollars * 100 + other.cents
+            if total_cents1 < total_cents2:
+                raise ValueError("Результат вычитания не может быть отрицательным")
+            result_cents = total_cents1 - total_cents2
+            return Money(result_cents // 100, result_cents % 100)
+        raise TypeError("Операция вычитания возможна только между двумя суммами денег")
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            total_cents = self.dollars * 100 + self.cents
+            result = total_cents * other
+            return Money(result // 100, result % 100)
+        raise TypeError("Умножать можно только на число")
+
+    def __truediv__(self, other):
+        if isinstance(other, (int, float)):
+            if other == 0:
+                raise ValueError("Деление на ноль")
+            total_cents = self.dollars * 100 + self.cents
+            result = total_cents / other
+            return Money(int(result) // 100, int(result) % 100)
+        raise TypeError("Делить можно только на число")
+
+    def __str__(self):
+        return f"{self.dollars} дол. {self.cents:02d} цент."
+
+# Пример использования
+sum1 = Money(34, 57)
+sum2 = Money(50, 31)
+
+print(sum1 + sum2)  # 84 дол. 88 цент.
+print(sum1 * 5)     # 172 дол. 85 цент.
+print(sum1 / 4)     # 8 дол. 64 цент.
+print(sum1 - sum2)  # Ошибка, если sum1 < sum2
