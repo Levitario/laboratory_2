@@ -1,0 +1,53 @@
+class Queue:
+    def __init__(self):
+        self.items = []
+        
+    def enqueue(self, item):
+        """Добавляет элемент в конец очереди."""
+        self.items.append(item)
+        
+    def dequeue(self):
+        """Удаляет и возвращает элемент из начала очереди."""
+        if not self.is_empty():
+            return self.items.pop(0)
+        else:
+            raise IndexError("Очередь пуста")
+    
+    def peek(self):
+        """Возвращает элемент из начала очереди без его удаления."""
+        if not self.is_empty():
+            return self.items[0]
+        else:
+            raise IndexError("Очередь пуста")
+    
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def __str__(self):
+        return str(self.items)
+
+print("\nПеред Вами будет представлено меню, с помощью которого Вы можете выполнять различные команды для взаимодействия с очередью")
+print("\nМеню")
+print("1. Добавить элемент")
+print("2. Удалить элемент")
+print("3. Просмотреть первый элемент")
+print("4. Показать очередь")
+print("5. Выход")
+    
+if __name__ == "__main__":
+    q = Queue()
+    while True:
+        choice = input("Выберите действие (введите номер действия): ")
+
+        if choice == "1":
+            item = input("Введите элемент: ")
+            q.enqueue(item)
+        elif choice == "2":
+            print(f"Удаленный элемент: {q.dequeue()}")
+        elif choice == "3":
+            print(f"Первый элемент: {q.peek()}")
+        elif choice == "4":
+            print(q)
+        elif choice == "5":
+            print("Работа программы завершена")
+            break
