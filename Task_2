@@ -1,0 +1,55 @@
+class Stack:
+    def __init__(self):
+        self.items = []
+        
+    def push(self, item):
+        """Добавляет элемент на вершину стека."""
+        self.items.append(item)
+        
+    def pop(self):
+        """Удаляет и возвращает верхний элемент стека."""
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            raise IndexError("Стек пуст")
+    
+    def peek(self):
+        """Возвращает верхний элемент стека без его удаления."""
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            raise IndexError("Стек пуст")
+    
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def __str__(self):
+        return str(self.items)
+    
+print("\nПеред Вами будет представлено меню, с помощью которого Вы можете выполнять различные команды для взаимодействия с очередью")
+print("\nМеню")
+print("1. Добавить элемент")
+print("2. Удалить элемент")
+print("3. Просмотреть верхний элемент")
+print("4. Показать стек")
+print("5. Выход\n")
+
+if __name__ == "__main__":
+    s = Stack()
+    while True:
+        
+        
+        choice = input("Выберите действие (введите номер действия): ")
+
+        if choice == "1":
+            item = input("Введите элемент: ")
+            s.push(item)
+        elif choice == "2":
+            print(f"Удаленный элемент: {s.pop()}")
+        elif choice == "3":
+            print(f"Верхний элемент: {s.peek()}")
+        elif choice == "4":
+            print(s)
+        elif choice == "5":
+            print("Работа программы завершена")
+            break
