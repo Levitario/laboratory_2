@@ -1,0 +1,221 @@
+class Tank:
+    def __init__(self, name, armament, weight, years_of_operation):
+        self.name = name
+        self.armament = armament
+        self.weight = weight
+        self.years_of_operation = years_of_operation
+
+    def __str__(self):
+        return f"{self.name}, вооружение (пушка) - {self.armament} мм, вес {self.weight} т, {self.years_of_operation} лет эксплутации."
+
+    def __repr__(self):
+        return f"<Tank(name={self.name}, armament={self.armament}, weight={self.weight}, years_of_operation={self.years_of_operation})>"
+
+    # Перегрузка операторов сравнения
+
+    def __eq__(self, other):
+        return self.weight == other.weight and self.years_of_operation == other.years_of_operation and self.armament == other.armament
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        return (self.weight, self.years_of_operation, self.armament) < (other.weight, other.years_of_operation, other.armament)
+
+    def __gt__(self, other):
+        return (self.weight, self.years_of_operation, self.armament) > (other.weight, other.years_of_operation, other.armament)
+
+    def __le__(self, other):
+        return (self.weight, self.years_of_operation, self.armament) <= (other.weight, other.years_of_operation, other.armament)
+
+    def __ge__(self, other):
+        return (self.weight, self.years_of_operation, self.armament) >= (other.weight, other.years_of_operation, other.armament)
+
+
+
+
+class TypeTank(Tank):
+    def __str__(self):
+        return f"танк {super().__str__()}"
+
+    def __repr__(self):
+        return f"<TypeTank(name={self.name}, armament={self.armament}, weight={self.weight}, years_of_operation={self.years_of_operation})>"
+
+
+class LightTank(TypeTank):
+    def __str__(self):
+        return f"Лёгкий {super().__str__()}"
+
+    def __repr__(self):
+        return f"<LightTank(name={self.name}, armament={self.armament}, weight={self.weight}, years_of_operation={self.years_of_operation})>"
+
+
+class MediumTank(TypeTank):
+    def __str__(self):
+        return f"Средний {super().__str__()}"
+
+    def __repr__(self):
+        return f"<MediumTank(name={self.name}, armament={self.armament}, weight={self.weight}, years_of_operation={self.years_of_operation})>"
+
+
+class HeavyTank(TypeTank):
+    def __str__(self):
+        return f"Тяжёлый {super().__str__()}"
+
+    def __repr__(self):
+        return f"<HeavyTank(name={self.name}, armament={self.armament}, weight={self.weight}, years_of_operation={self.years_of_operation})>"
+
+
+Tanks = []
+
+
+def add_tanki():
+    """Функция для добавления танка."""
+    name = input("Введите наименование танка: ")
+    armament = int(input("Введите вооружение танка (только основное орудие (диаметр)): "))
+    weight = int(input("Введите вес танка (т): "))
+    years_of_operation = int(input("Введите кол-во лет эксплутации танка: "))
+    print("Выберите тип танка:")
+    print("1. Лёгкий танк")
+    print("2. Средний танк")
+    print("3. Тяжёлый танк")
+    choice = input("> ")
+
+    if choice == "1":
+        tanki = LightTank(name, armament, weight, years_of_operation)
+    elif choice == "2":
+        tanki = MediumTank(name, armament, weight, years_of_operation)
+    elif choice == "3":
+        tanki = HeavyTank(name, armament, weight, years_of_operation)
+    else:
+        print("Данной команды нет. Повторите попытку")
+        return
+
+    Tanks.append(tanki)
+    print(f"Танк {name} успешно добавлен!")
+
+
+def view_Tanks():
+    """Функция для просмотра всех танков."""
+    if not Tanks:
+        print("Пока нет добавленных танков.")
+        return
+
+    for tanki in Tanks:
+        print(tanki)
+
+
+
+
+def main():
+    """Основная функция для взаимодействия с пользователем."""
+    while True:
+        print("\nМеню:")
+        print("1. Добавить танк")
+        print("2. Просмотреть список танков")
+        print("3. Выход")
+        choice = input("> ")
+
+        if choice == "1":
+            add_tanki()
+        elif choice == "2":
+            view_Tanks()
+        elif choice == "3":
+            break
+        else:
+            print("Данной команды нет. Повторите попытку")
+
+
+
+def main():
+    # Заранее созданный список из 15 танков
+    Tanks = [
+        LightTank("Т-26", 45, 10, 1961-1931),
+        MediumTank("Т-28", 76, 25, 1944-1933),
+        HeavyTank("Т-35", 76, 58, 1941-1932),
+        LightTank("Pz-2", 9, 20, 1945-1935),
+        MediumTank("Pz-3", 15, 37, 1945-1938),
+        HeavyTank("Pz-6 Tiger", 57, 88, 1945-1942),
+        LightTank("M3 Stuart", 12, 37, 1955-1941),
+        MediumTank("M4 Scherman", 76, 30, 1945-1942),
+        HeavyTank("T-26 Patton", 6, 43, 1953-1944),
+        LightTank("Mk.VII Tetrarch", 7, 40, 1947-1940),
+        MediumTank("Mk.II Matilda", 27, 40, 1949-1939),
+        HeavyTank("Mk.III Churchill", 57, 38, 1969-1941),
+        LightTank("Te-Ke", 5, 37, 1945-1937),
+        MediumTank("Chi-Ny", 19, 75, 1960-1943),
+    ]
+
+    while True:
+        print("\nМеню:")
+        print("1. Добавить танк")
+        print("2. Просмотреть список танков")
+        print("3. Сравнить два танка.")
+        print("4. Выйти.")
+
+        choice = input("Выберите действие: ")
+
+        if choice == "1":
+            name = input("Введите наименование танка: ")
+            armament = int(input("Введите вооружение танка (только основное орудие (диаметр): "))
+            weight = int(input("Введите вес танка (т): "))
+            years_of_operation = int(input("Введите кол-во лет эксплутации танка: "))
+
+            print("Выберите тип танка:")
+            print("1. Лёгкий танк")
+            print("2. Средний танк")
+            print("3. Тяжёлый танк")
+
+            type_choice = input()
+
+            if type_choice == "1":
+                tanki = LightTank(name, armament, weight, years_of_operation)
+            elif type_choice == "2":
+                tanki = MediumTank(name, armament, weight, years_of_operation)
+            elif type_choice == "3":
+                tanki = HeavyTank(name, armament, weight, years_of_operation)
+            else:
+                print("Неверный выбор типа.")
+                continue
+
+            Tanks.append(tanki)
+            print(f"Танк {name} добавлен!")
+
+        elif choice == "2":
+            if not Tanks:
+                print("Нет добавленных танков.")
+            else:
+                for i, tanki in enumerate(Tanks, 1):
+                    print(f"{i}. {tanki}")
+
+        elif choice == "3":
+            if len(Tanks) < 2:
+                print("Добавьте хотя бы два танка для сравнения.")
+                continue
+
+            for i, tanki in enumerate(Tanks, 1):
+                print(f"{i}. {tanki.name}")
+
+            first_choice = int(input("Выберите первый танк для сравнения (по номеру): "))
+            second_choice = int(input("Выберите второй танк для сравнения (по номеру): "))
+
+            first_tanki = Tanks[first_choice - 1]
+            second_tanki = Tanks[second_choice - 1]
+
+            attributes = ['height', 'armament', 'years_of_operation']
+
+            for attribute in attributes:
+                if getattr(first_tanki, attribute) == getattr(second_tanki, attribute):
+                    print(f"Танки {first_tanki.name} и {second_tanki.name} равны по {attribute}.")
+                elif getattr(first_tanki, attribute) > getattr(second_tanki, attribute):
+                    print(f"Танк {first_tanki.name} превосходит танк {second_tanki.name} по {attribute}.")
+                else:
+                    print(f"Танк {first_tanki.name} уступает танку {second_tanki.name} по {attribute}.")
+        elif choice == "4":
+            break
+
+        else:
+            print("Данной команды нет. Повторите попытку")
+
+if __name__ == "__main__":
+    main()
